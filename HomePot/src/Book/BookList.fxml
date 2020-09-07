@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" 
+xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="253.0" text="책이름" />
+          <TableColumn prefWidth="118.0" text="저자" />
+            <TableColumn prefWidth="117.0" text="출판사" />
+            <TableColumn prefWidth="111.0" text="가격" />
+        </columns>
+      </TableView>
+   </center>
+   <top>
+      <Label prefHeight="39.0" prefWidth="622.0" text="보고싶은 책을 추가해주세요" textFill="#4e8d57" wrapText="true" BorderPane.alignment="CENTER">
+         <graphic>
+            <Button alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="39.0" prefWidth="197.0" text="책 추가 / 수정" textAlignment="CENTER" textFill="#ab6161">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </graphic>
+         <font>
+            <Font name="Bodoni MT" size="25.0" />
+         </font>
+      </Label>
+   </top>
+</BorderPane>
