@@ -37,7 +37,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="25.0" layoutY="281.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="47.0" text="수정" />
-      <Button layoutX="116.0" layoutY="281.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="47.0" text="삭제" />
+      <Button fx:id=btnUpdate layoutX="25.0" layoutY="281.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="47.0" text="수정" />
+      <Button fx:id="btnFormCancel" layoutX="116.0" layoutY="281.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="47.0" text="삭제" />
    </children>
 </AnchorPane>
