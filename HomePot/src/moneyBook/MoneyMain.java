@@ -14,8 +14,8 @@ public class MoneyMain extends Application {
 FXMLLoader loader = new FXMLLoader(getClass().getResource("MoneyList.fxml"));
 BorderPane moneylist = loader.load();
 
-//MoneyController controller = loader.getController();
-//controller.setPrimaryStage(primaryStage);
+MoneyController controller = loader.getController();
+controller.setPrimaryStage(primaryStage);
 
 Scene scene = new Scene(moneylist);
 primaryStage.setTitle("가계부");
