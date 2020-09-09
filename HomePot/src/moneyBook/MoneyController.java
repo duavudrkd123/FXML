@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -18,8 +19,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -31,7 +34,7 @@ public class MoneyController implements Initializable {
 	Button btnAdd, btnChart, btnAadd, btnDel, btnModi, btnClear, btnExit;
 	@FXML
 	TableView<Money> tableView;
-	
+
 	ObservableList<Money> list;
 	Connection conn = MConnection.getDB(); // 광히형이해줬어
 
@@ -49,8 +52,8 @@ public class MoneyController implements Initializable {
 
 		tc = tableView.getColumns().get(3);
 		tc.setCellValueFactory(new PropertyValueFactory<>("pay"));
-		
-		//데이터불러오기
+
+		// 데이터불러오기
 		listAdd();
 
 		// add버튼
@@ -76,19 +79,19 @@ public class MoneyController implements Initializable {
 	}
 
 	public void listAdd() {
-		String sql = "select * from MONEY order by WhenDate"; //sql명령문
+		String sql = "select * from MONEY order by WhenDate"; // sql명령문
 		try {
 			list = FXCollections.observableArrayList();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			
+
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				Money money = new Money(rs.getString("WHENDATE"), rs.getString("DASCRIBE"),
-						rs.getInt("USED"), rs.getString("PAY"));
+			while (rs.next()) {
+				Money money = new Money(rs.getString("WHENDATE"), rs.getString("DESCRIBE"), rs.getInt("USED"),
+						rs.getString("PAY"));
 				list.add(money);
-			};
-			
-			
+			}
+			;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -110,12 +113,48 @@ public class MoneyController implements Initializable {
 			stage.setScene(scene);
 			stage.show();
 			btnExit.setOnAction(event -> stage.close());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			
+			Button btnAadd = (Button) parent.lookup("#btnAadd");
+			btnAadd.setOnAction(event-> {
+				DatePicker DATE = (DatePicker) parent.lookup("#DATE");
+				TextField DESC = (TextField) parent.lookup("#DESC");
+				TextField USED = (TextField) parent.lookup("#USED");
+				TextField PAY = (TextField) parent.lookup("#PAY");
+				
+				String sql = "insert into MONEY values(?,?,?,?)";
+				
+				try {
+					PreparedStatement pstmt = conn.prepareStatement(sql);
+					pstmt.setNString(1, String.valueOf(DATE.getValue()));
+					pstmt.setNString(2, DESC.getText());
+					pstmt.setNString(3, USED.getText());
+					pstmt.setNString(4, PAY.getText());
+					pstmt.executeUpdate();
+					
+				}catch (SQLException e) {
+					e.printStackTrace();
+				}
+						stage.close();
+						listAdd();
+				
+			});
+			
+			Button btnClear = (Button) parent.lookup("#btnClear");
+			btnClear.setOnAction(event-> {
+				TextField DESC = (TextField) parent.lookup("#DESC");
+				TextField USED = (TextField) parent.lookup("#USED");
+				TextField PAY = (TextField) parent.lookup("#PAY");
+				
+				DESC.clear();
+				USED.clear();
+				PAY.clear();
+			});
+			} catch (IOException e) {
+				e.printStackTrace();
+							}
 	}
-
+	
+		
 	// 차트 화면 보여주는거
 	public void handleBtnChartAction() {
 		Stage stage = new Stage(StageStyle.UTILITY); // 이게 머임

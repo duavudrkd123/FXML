@@ -48,22 +48,21 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="DESC" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="USED" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="PAY" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <AnchorPane GridPane.rowIndex="4">
                <children>
-                  <Button fx:id="btnAadd" layoutX="14.0" layoutY="4.0" mnemonicParsing="false" 
-                  prefHeight="20.0" prefWidth="59.0" text="추가" GridPane.rowIndex="4" />
+                  <Button fx:id="btnAadd" layoutX="14.0" layoutY="4.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="59.0" text="추가" GridPane.rowIndex="4" />
                </children>
             </AnchorPane>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <Button fx:id="btnClear" layoutY="3.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="90.0" text="모두 지우기" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Button fx:id="btnExit" layoutX="124.0" layoutY="3.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="62.0" text="나가기" />
                </children>
             </AnchorPane>
+            <DatePicker fx:id="DATE" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </center>
