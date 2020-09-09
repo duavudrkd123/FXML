@@ -66,6 +66,7 @@ public class MoneyController implements Initializable {
 			}
 
 		});
+		
 		// chart버튼
 		btnChart.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -99,7 +100,12 @@ public class MoneyController implements Initializable {
 	}
 
 	// Initializable
-//추가 화면을 보여주는 거
+	
+	//차트 화면 보여주는거
+
+	
+	//추가 화면을 보여주는 거
+	
 	public void handleBtnAddAction() {
 		Stage stage = new Stage(StageStyle.UTILITY); // 이게 머임
 		stage.initModality(Modality.WINDOW_MODAL); // 이게 머임
@@ -113,7 +119,7 @@ public class MoneyController implements Initializable {
 			stage.setScene(scene);
 			stage.show();
 			btnExit.setOnAction(event -> stage.close());
-			
+			// sql 값 넣는거
 			Button btnAadd = (Button) parent.lookup("#btnAadd");
 			btnAadd.setOnAction(event-> {
 				DatePicker DATE = (DatePicker) parent.lookup("#DATE");
