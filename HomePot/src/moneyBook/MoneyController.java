@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -24,6 +23,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -31,12 +31,14 @@ import javafx.stage.StageStyle;
 // controller 제일 화나는것
 public class MoneyController implements Initializable {
 	@FXML
-	Button btnAdd, btnChart, btnAadd, btnDel, btnModi, btnClear, btnExit;
+	Button btnAdd, btnChart, btnAadd, btnDel, btnModi, btnClear, btnExit, dateCh;
 	@FXML
 	TableView<Money> tableView;
 
+	Stage primaryStage;
+
 	ObservableList<Money> list;
-	Connection conn = MConnection.getDB(); // 광히형이해줬어
+	Connection conn = MConnection.getDB(); // 정은이가이해줬어
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -56,6 +58,17 @@ public class MoneyController implements Initializable {
 		// 데이터불러오기
 		listAdd();
 
+		tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.getClickCount() == 2) {
+					handleDoubleClickAction(tableView.getSelectionModel().getSelectedItem().getDescribe());
+				}
+			}
+
+		});
+
 		// add버튼
 		btnAdd.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -66,17 +79,55 @@ public class MoneyController implements Initializable {
 			}
 
 		});
-		
-		// chart버튼
-		btnChart.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				handleBtnChartAction();
-			}
+	}
 
-		});
+	protected void handleDoubleClickAction(String describe) {
+		Stage stage = new Stage(StageStyle.UTILITY);
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(primaryStage);
+		try {
+			Parent parent = FXMLLoader.load(getClass().getResource("MoneyModi.fxml"));
+			Scene scene = new Scene(parent);
+			stage.setScene(scene);
+			stage.show();
+			
+			
+			
+			btnModi.setOnAction(new EventHandler<ActionEvent>() {
 
+				@Override
+				public void handle(ActionEvent event) {
+					
+					
+					
+					
+				}
+				
+			});
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
+
+		}
+	}
+	
+	public void listModi(Money money) {
+		String sql = "UPDATE MONEY SET whendate= ?,describe= ?,used= ?, pay= ? WHERE describe = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, money.getWhendate());
+			pstmt.setString(2, money.getDescribe());
+			pstmt.setInt(3, money.getUsed());
+			pstmt.setString(4, money.getPay());
+			pstmt.setString(5, money.getDescribe());
+			
+
+			int r = pstmt.executeUpdate();
+			System.out.println(r + "건 입력됨.");
+
+		} catch (SQLException e) {
+			e.printStackTrace();}
 	}
 
 	public void listAdd() {
@@ -100,15 +151,14 @@ public class MoneyController implements Initializable {
 	}
 
 	// Initializable
-	
-	//차트 화면 보여주는거
 
-	
-	//추가 화면을 보여주는 거
-	
+	// 차트 화면 보여주는거
+
+	// 추가 화면을 보여주는 거
+
 	public void handleBtnAddAction() {
-		Stage stage = new Stage(StageStyle.UTILITY); // 이게 머임
-		stage.initModality(Modality.WINDOW_MODAL); // 이게 머임
+		Stage stage = new Stage(StageStyle.UTILITY); // 됴니언니 이게 머임
+		stage.initModality(Modality.WINDOW_MODAL); // 됸이 이게 머임
 		stage.initOwner(btnAdd.getScene().getWindow());
 		try {
 			Parent parent = FXMLLoader.load(getClass().getResource("MoneyAdd.fxml"));
@@ -121,14 +171,14 @@ public class MoneyController implements Initializable {
 			btnExit.setOnAction(event -> stage.close());
 			// sql 값 넣는거
 			Button btnAadd = (Button) parent.lookup("#btnAadd");
-			btnAadd.setOnAction(event-> {
+			btnAadd.setOnAction(event -> {
 				DatePicker DATE = (DatePicker) parent.lookup("#DATE");
 				TextField DESC = (TextField) parent.lookup("#DESC");
 				TextField USED = (TextField) parent.lookup("#USED");
 				TextField PAY = (TextField) parent.lookup("#PAY");
-				
+
 				String sql = "insert into MONEY values(?,?,?,?)";
-				
+
 				try {
 					PreparedStatement pstmt = conn.prepareStatement(sql);
 					pstmt.setNString(1, String.valueOf(DATE.getValue()));
@@ -136,46 +186,24 @@ public class MoneyController implements Initializable {
 					pstmt.setNString(3, USED.getText());
 					pstmt.setNString(4, PAY.getText());
 					pstmt.executeUpdate();
-					
-				}catch (SQLException e) {
+
+				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-						stage.close();
-						listAdd();
-				
+				stage.close();
+				listAdd();
 			});
-			
+
 			Button btnClear = (Button) parent.lookup("#btnClear");
-			btnClear.setOnAction(event-> {
+			btnClear.setOnAction(event -> {
 				TextField DESC = (TextField) parent.lookup("#DESC");
 				TextField USED = (TextField) parent.lookup("#USED");
 				TextField PAY = (TextField) parent.lookup("#PAY");
-				
+
 				DESC.clear();
 				USED.clear();
 				PAY.clear();
 			});
-			} catch (IOException e) {
-				e.printStackTrace();
-							}
-	}
-	
-		
-	// 차트 화면 보여주는거
-	public void handleBtnChartAction() {
-		Stage stage = new Stage(StageStyle.UTILITY); // 이게 머임
-		stage.initModality(Modality.WINDOW_MODAL); // 이게 머임
-		stage.initOwner(btnAdd.getScene().getWindow());
-		try {
-			Parent parent = FXMLLoader.load(getClass().getResource("MoneyChart.fxml"));
-			Button btnExit = (Button) parent.lookup("#btnExit"); // #은 id값을 찾아줄때
-
-			Scene scene = new Scene(parent);
-			stage.setTitle("차트");
-			stage.setScene(scene);
-			stage.show();
-
-			btnExit.setOnAction(event -> stage.close());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

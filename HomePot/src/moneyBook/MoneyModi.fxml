@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <Label alignment="TOP_CENTER" prefHeight="63.0" prefWidth="315.0" text="수정 및 삭제 메뉴" BorderPane.alignment="CENTER">
          <font>
@@ -49,14 +48,12 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField GridPane.columnIndex="1" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Button fx:id="btnModi" mnemonicParsing="false" prefHeight="23.0" 
-            prefWidth="47.0" text="수정" GridPane.rowIndex="4" />
-            <Button fx:id="btnDel" mnemonicParsing="false" prefHeight="23.0" 
-            prefWidth="47.0" text="삭제" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button fx:id="btnModi" mnemonicParsing="false" prefHeight="23.0" prefWidth="47.0" text="수정" GridPane.rowIndex="4" />
+            <Button fx:id="btnDel" mnemonicParsing="false" prefHeight="23.0" prefWidth="47.0" text="삭제" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="dateCh" prefHeight="23.0" prefWidth="205.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </center>
