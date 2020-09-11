@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -63,7 +64,8 @@ public class MoneyController implements Initializable {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.getClickCount() == 2) {
-					handleDoubleClickAction(tableView.getSelectionModel().getSelectedItem().getDescribe());
+					String selectedId = tableView.getSelectionModel().getSelectedItem().getDescribe();
+					handleDoubleClickAction(selectedId);
 				}
 			}
 
@@ -83,6 +85,7 @@ public class MoneyController implements Initializable {
 	}
 
 	protected void handleDoubleClickAction(String describe) {
+		Money money = new Money();
 		Stage stage = new Stage(StageStyle.UTILITY);
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.initOwner(primaryStage);
@@ -91,44 +94,43 @@ public class MoneyController implements Initializable {
 			Scene scene = new Scene(parent);
 			stage.setScene(scene);
 			stage.show();
+			TextField desc=(TextField) parent.lookup("#desc");
+			TextField used=(TextField) parent.lookup("#used");
+			TextField pay=(TextField) parent.lookup("#pay");
+			DatePicker date= (DatePicker) parent.lookup("#date");
 			
-			
-			
-			btnModi.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-					
-					
-					
-					
+			for(Money m : list ) {
+				if(m.getDescribe().equals(describe)) {
+					desc.setText(m.getDescribe());
+					used.setText(String.valueOf(m.getUsed()));
+					pay.setText(m.getPay());
+					date.setValue(LocalDate.parse(m.getWhendate().substring(0,10)));
 				}
-				
-			});
+			}
+			
+			Button but = (Button)parent.lookup("#btnModi");
+			but.setOnAction(event -> {
+				String sql = "UPDATE MONEY SET WHENDATE = ?, DESCRIBE = ?, USED = ?, PAY = ? where=?";
+				try {
+					PreparedStatement pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, money.getWhendate());
+					pstmt.setString(2, money.getDescribe());
+					pstmt.setInt(3, money.getUsed());
+					pstmt.setString(4, money.getPay());
+					pstmt.setString(5, money.getDescribe());
+					pstmt.executeUpdate();
 
-		} catch (IOException e1) {
+				} catch (SQLException e) {
+					e.printStackTrace();}
+				stage.close();
+				listAdd();
+			});
+		}catch (IOException e1) {
 			e1.printStackTrace();
 
 		}
 	}
 	
-	public void listModi(Money money) {
-		String sql = "UPDATE MONEY SET whendate= ?,describe= ?,used= ?, pay= ? WHERE describe = ?";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, money.getWhendate());
-			pstmt.setString(2, money.getDescribe());
-			pstmt.setInt(3, money.getUsed());
-			pstmt.setString(4, money.getPay());
-			pstmt.setString(5, money.getDescribe());
-			
-
-			int r = pstmt.executeUpdate();
-			System.out.println(r + "건 입력됨.");
-
-		} catch (SQLException e) {
-			e.printStackTrace();}
-	}
 
 	public void listAdd() {
 		String sql = "select * from MONEY order by WhenDate"; // sql명령문

@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Money {
+	Money(){}
 	private SimpleStringProperty whendate;
 	private SimpleStringProperty describe;
 	private SimpleIntegerProperty used;

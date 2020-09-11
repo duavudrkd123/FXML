@@ -48,12 +48,12 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField id="desc" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField id="used" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField id="pay" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Button fx:id="btnModi" mnemonicParsing="false" prefHeight="23.0" prefWidth="47.0" text="수정" GridPane.rowIndex="4" />
             <Button fx:id="btnDel" mnemonicParsing="false" prefHeight="23.0" prefWidth="47.0" text="삭제" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DatePicker fx:id="dateCh" prefHeight="23.0" prefWidth="205.0" GridPane.columnIndex="1" />
+            <DatePicker id="date" prefHeight="23.0" prefWidth="205.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </center>
