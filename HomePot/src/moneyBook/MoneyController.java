@@ -115,7 +115,7 @@ public class MoneyController implements Initializable {
 					PreparedStatement pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, money.getWhendate());
 					pstmt.setString(2, money.getDescribe());
-					pstmt.setInt(3, money.getUsed());
+					pstmt.setInt(3, money.getUsed());6
 					pstmt.setString(4, money.getPay());
 					pstmt.setString(5, money.getDescribe());
 					pstmt.executeUpdate();
